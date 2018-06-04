@@ -1,5 +1,5 @@
 
-哉名：www.cnhdzp.com
+哉名：
 
 
 测试帐号：
@@ -8,7 +8,7 @@
   经理:15011112222/123456
   
 后台登录方式
-https://www.cnhdzp.com/Boyun/admin.php 帐号：admin1/123456
+https://*/Boyun/admin.php 帐号：admin1/123456
 
 客户头像路径: 
 	(缩略图) https://域名/Boyun/data/cs/thumb/+头像名字
@@ -152,7 +152,7 @@ https://www.cnhdzp.com/Boyun/admin.php 帐号：admin1/123456
 			month : 时间格式(yyyy-mm) 如2017-10
 			p : 分页 (可选)
  7. 取消用户openid的绑定
-     https://www.cnhdzp.com/Boyun/index.php?m=Api&a=index&method=unBInd&id=2&role=customer
+     https://*/Boyun/index.php?m=Api&a=index&method=unBInd&id=2&role=customer
      id ： 用户ID,
 	 role : 角色 customer 或staff 二选一
     

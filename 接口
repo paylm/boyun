@@ -1,0 +1,158 @@
+
+哉名：www.cnhdzp.com
+
+
+测试帐号：
+  用户：13800001111/123456
+  销售员：15087676444/123456 
+  经理:15011112222/123456
+  
+后台登录方式
+https://www.cnhdzp.com/Boyun/admin.php 帐号：admin1/123456
+
+客户头像路径: 
+	(缩略图) https://域名/Boyun/data/cs/thumb/+头像名字
+	(原图) https://域名/Boyun/data/cs/+头像名字	 
+员工头像路径: 
+	(缩略图) https://域名/Boyun/data/staff/thumb/+头像名字
+	(原图) https://域名/Boyun/data/staff/+头像名字	 
+产品图片
+	 https://域名/Boyun/data/product/+图片名
+新闻图片:
+	https://域名/Boyun/data/news/+图片名
+
+ 1 。 登录接口(POST):
+ 	https://域名/Boyun/index.php?m=m=Api&a=index&method=login
+ 		参数：username
+ 			password
+ 			code : 微信开发者服务器使用登录凭证 code (可选传入正确值，会在登录时绑定用户微信号)
+ 			
+ 			登录成功时，返回码为200 和用户角色(role)
+ 			role : customer 为客户
+ 			role : staff 为员工  ， job_id => 0  专家， job_id=>1 总监， job_id=2 经理 ,job_id=>3 员工
+ 			       注：job_id < 3 为管理层
+ 	1.1 登录接口(通过微信code登录)
+ 	    https://域名/Boyun/index.php?m=m=Api&a=index&method=wxlogin
+ 		   code : 微信开发者服务器使用登录凭证 code，必填
+ 		
+ 	
+2 . 退出登录接口
+    https://域名/Boyun/index.php?m=Api&a=index&methed=logout
+ 
+    
+
+3 。 客户相关
+           
+	3。1 客户信息
+	https://域名/Boyun/index.php?m=Cs&a=myInfo
+	返回信息包括销售员信息:
+		seller['tel'] 销售员联系电话
+		seller['real_name'] 销售员真实名字
+	
+	3.2 .客户帐单
+	
+	3.2 . 预订产品(post)
+		https://域名/Boyun/index.php?m=Cs&a=book
+		参数：
+		pdt_id : 产品ID
+		book_count : 数目
+		total_money : 花费总价
+	3.3 帐单纪录
+		https://域名/Boyun/index.php?m=Cs&a=bills
+		参数：month ： 年月(可选) 如2017-11
+	
+4 . 产品列表
+	https://域名/Boyun/index.php?m=Api&a=productSearchGet
+	
+	传参:
+		p 页码 (可不传)
+		is_hot : 1   新品和热门(可不传)	
+	返回值关键点:
+		type : product 产品信息,news 为新闻信息
+		
+4.1 具体一个产品信息：
+	https://域名/Boyun/index.php?m=Api&a=getProductById&id=100014
+	参数： 
+		id 产品id 
+	
+4. 2 产品的说明页面
+   https://域名/Boyun/index.php?m=Api&a=productView&id=100014
+	参数： 
+		id 产品id 
+	
+4.3 新闻详情页面
+	https://域名/Boyun/index.php?m=Api&a=newsView&id=2
+		参数： 
+		id: 新闻id
+	
+5.1 员工自己信息
+	头像在:https://域名/Boyun/data/staff/thumb/+图片名
+	https://域名/Boyun/index.php?m=Staff&a=myInfo
+	
+	5.2客户列表：
+	https://域名/Boyun/index.php?m=Staff&a=myCustomers
+	
+	5。3 某客户的消费/充值/订购纪录
+		https://域名/Boyun/index.php?m=Staff&a=recordByCid
+		参数: cid : 客户ID (必填)
+			action :纪录类型   deposit  为充值纪录 , book 为预订纪录 , 留空或不传为消费纪录
+			month : 时间格式(yyyy-mm) 如2017-10
+			p : 分页 (可选)
+	5。3 所有客户的消费纪录(默认返回本月)
+		https://域名/Boyun/index.php?m=Staff&a=records
+		参数: 
+			month : 时间格式(yyyy-mm) 如2017-10
+			p : 分页 (可选)
+	5.5 预定通知
+	https://域名/Boyun/index.php?m=Staff&a=bookNotices
+	
+	5.6 更新头像（post）
+     https://域名/Boyun/index.php?m=Staff&a=updateImg
+     	参数： img 
+	
+	5.7 我的员工们/经理们/主管们
+	 https://域名/Boyun/index.php?m=Staff&a=mySubordinate
+	 注：系统会自动找到当前用户的一下级，不用传参
+	 
+	5.8 客户详细信息
+		https://域名/Boyun/index.php?m=Staff&a=customerInfo&id=2
+		参数:
+			id 商户ID
+	5.9 打卡(POST)
+		https://域名/Boyun/index.php?m=Staff&a=clockIn
+		 参数:
+			latitude	纬度，浮点数，范围为-90~90，负数表示南纬	
+			longitude	经度，浮点数，范围为-180~180，负数表示西经
+			altitude	高度，单位 m	
+			speed 速度，浮点数，单位m/s
+			addr 中文签到地址
+			others 备注信息，说明是在哪个客户或出差什么(可选填)
+	 
+6 经理/主管/专家 
+  6.1 我的员工信息
+  	https://域名/Boyun/index.php?m=Manager&a=getStaff&sid=xxx
+
+  	 参数： 
+  	 	sid ： 员工ID 	
+  6.2 某员工的业绩(经理人员获取员工业绩)
+  	 https://域名/Boyun/index.php?m=Manager&a=performance&sid=xxx
+  	 	参数： 
+		sid ： 员工ID 
+  	 
+  6.3 个人信息
+	https://域名/Boyun/index.php?m=Manager&a=myInfo
+
+  6.4 经理/主管/专家的业绩
+  	 https://域名/Boyun/index.php?m=Manager&a=Admperformance&sid=xxx
+  	 	参数： 
+		sid ： 员工ID 
+  6.5 交易纪录(默认返回本月)
+		https://域名/Boyun/index.php?m=Manager&a=records
+		参数: 
+			month : 时间格式(yyyy-mm) 如2017-10
+			p : 分页 (可选)
+ 7. 取消用户openid的绑定
+     https://www.cnhdzp.com/Boyun/index.php?m=Api&a=index&method=unBInd&id=2&role=customer
+     id ： 用户ID,
+	 role : 角色 customer 或staff 二选一
+    
